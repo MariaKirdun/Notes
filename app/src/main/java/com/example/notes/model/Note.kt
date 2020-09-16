@@ -10,5 +10,6 @@ data class Note(
     @PrimaryKey val uid: Int,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "text") val text: String?,
-    @ColumnInfo(name = "date") val date: Date
+    @ColumnInfo(name = "date") val date: Date,
+    @ColumnInfo(name = "color") val color: String?
 )

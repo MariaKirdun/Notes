@@ -1,34 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
+    <data>
+        <variable
+            name="note"
+            type="com.example.notes.model.Note"
+            />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/color_note"
-        android:layout_width="24dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/pin_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/colorPrimary"/>
+        <TextView
+            android:id="@+id/color_note"
+            android:layout_width="24dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/pin_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/colorPrimary"/>
 
-    <TextView
-        android:id="@+id/name_note"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Some Note"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/color_note"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/name_note"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{note.text}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/color_note"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/pin_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="pin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_note" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/pin_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="pin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name_note" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

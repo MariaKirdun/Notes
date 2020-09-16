@@ -5,12 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.room.Room
 import com.example.notes.R
+import com.example.notes.model.AppDatabase
 import com.example.notes.viewmodel.ListNotesViewModel
+import kotlinx.android.synthetic.main.notes_fragment.*
 
 class ListNotesFragment : Fragment() {
 
     private lateinit var viewModel: ListNotesViewModel
+    private var adapter = NodesAdapter (listOf())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,12 +25,12 @@ class ListNotesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel = ListNotesViewModel(Room.databaseBuilder(activity!!.applicationContext, AppDatabase::class.java, "notebase").build().noteDao())
+        viewModel.addNotesIntoBase()
 
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ListNotesViewModel()
+        viewModel.notes.observe(this) {
+            adapter = NodesAdapter(it)
+        }
     }
 
 }

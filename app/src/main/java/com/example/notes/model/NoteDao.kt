@@ -1,5 +1,6 @@
 package com.example.notes.model
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,7 +10,7 @@ import androidx.room.Query
 interface NoteDao {
 
     @Query("SELECT * FROM note")
-    fun getAll(): List<Note>
+    fun getAll(): LiveData<List<Note>>
 
     @Query("SELECT * FROM note WHERE uid IN (:noteIds)")
     fun loadAllByIds(noteIds: IntArray): List<Note>
