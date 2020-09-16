@@ -25,6 +25,7 @@ class NodesAdapter :RecyclerView.Adapter<NodesAdapter.NodesViewHolder>(){
     override fun onBindViewHolder(holder: NodesViewHolder, position: Int) {
         val note = dataset[position]
         holder.itemView.name_note.text = note.name
+        holder.itemView.text_note.text = note.text
         holder.itemView.pin_button.setOnClickListener(listener)
     }
 

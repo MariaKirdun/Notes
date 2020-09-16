@@ -56,7 +56,7 @@ class ListNotesFragment : Fragment() {
 
         add_note_button.setOnClickListener {
             Toast.makeText(this.context, "createNote", Toast.LENGTH_SHORT).show()
-            viewModel.insert(Note(name = "gyte", text = "athgrgr", color = "red", date = Date()))
+            viewModel.insert(Note(name = "gyte", text = "viuoiu", color = "red", date = Date()))
         }
 
         search_edit_text.doOnTextChanged { text, start, count, after ->
@@ -64,7 +64,10 @@ class ListNotesFragment : Fragment() {
         }
     }
 
-    fun sortByName(str: String) = notesList.filter { it.name.contains(str, true) }
+    private fun sortByName(str: String) = notesList.filter {
+        it.name.contains(str, true) ||
+        it.text.contains(str,true)
+    }
 
     private var simpleItemTouchCallback: ItemTouchHelper.SimpleCallback = object :
         ItemTouchHelper.SimpleCallback(
