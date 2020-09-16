@@ -6,22 +6,34 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.R
 import com.example.notes.model.Note
+import kotlinx.android.synthetic.main.note_item_layout.view.*
 
-class NodesAdapter(private val dataset: List<Note>) :RecyclerView.Adapter<NodesAdapter.NodesViewHolder>(){
-    
+
+class NodesAdapter :RecyclerView.Adapter<NodesAdapter.NodesViewHolder>(){
+
+    private var dataset: List<Note> = listOf()
+    var listener : View.OnClickListener? = null
+
     class NodesViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NodesViewHolder {
         return NodesViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.note_item_layout, parent)
+            LayoutInflater.from(parent.context).inflate(R.layout.note_item_layout, parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: NodesViewHolder, position: Int) {
-
+        val note = dataset[position]
+        holder.itemView.name_note.text = note.name
+        holder.itemView.pin_button.setOnClickListener(listener)
     }
 
-    override fun getItemCount(): Int {
-        return dataset.size
+    fun setNotes(notes: List<Note>) {
+        this.dataset = notes
+        notifyDataSetChanged()
     }
+
+    override fun getItemCount() = dataset.size
+
+    fun getItem(position: Int) = dataset[position]
 }

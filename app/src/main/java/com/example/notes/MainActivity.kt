@@ -13,8 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding : MainActivity =
-            DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
         db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "notebase").build()
 
@@ -23,4 +22,6 @@ class MainActivity : AppCompatActivity() {
             .commit()
 
     }
+
+
 }

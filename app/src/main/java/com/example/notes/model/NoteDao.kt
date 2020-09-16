@@ -9,17 +9,11 @@ import androidx.room.Query
 @Dao
 interface NoteDao {
 
-    @Query("SELECT * FROM note")
+    @Query("SELECT * FROM notes")
     fun getAll(): LiveData<List<Note>>
 
-    @Query("SELECT * FROM note WHERE uid IN (:noteIds)")
-    fun loadAllByIds(noteIds: IntArray): List<Note>
-
-    @Query("SELECT * FROM note WHERE name LIKE :name")
-    fun loadAllByName(name: String): List<Note>
-
     @Insert
-    fun insertAll(vararg notes: Note)
+    fun insert( note: Note)
 
     @Delete
     fun delete(note: Note)

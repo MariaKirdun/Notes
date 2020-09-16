@@ -1,25 +1,43 @@
 package com.example.notes.viewmodel
 
+import android.app.Application
 import android.provider.ContactsContract
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.notes.model.AppDatabase
 import com.example.notes.model.Note
 import com.example.notes.model.NoteDao
+import com.example.notes.model.Repository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.coroutines.coroutineContext
 
-class ListNotesViewModel(private val database: NoteDao) : ViewModel() {
+class ListNotesViewModel (application: Application) : AndroidViewModel(application) {
 
-    val notes = database.getAll()
+    private val repository: Repository
 
-    fun addNotesIntoBase(){
-        GlobalScope.launch {
-            database.insertAll(
-                Note(1,"first", "text", Date(), null),
-                Note(2,"second", "text", Date(), null)
-            )
+    val notes: LiveData<List<Note>>
+
+    init {
+        val noteDao = AppDatabase.getDatabase(application, viewModelScope).noteDao()
+        repository = Repository(noteDao)
+        notes = repository.allNotes
+    }
+
+    fun insert(note: Note){
+       viewModelScope.launch(Dispatchers.IO) {
+           repository.insert(note)
+       }
+    }
+
+    fun delete(note: Note){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.delete(note)
         }
     }
 
