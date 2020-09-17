@@ -27,7 +27,11 @@ class NodesAdapter :RecyclerView.Adapter<NodesAdapter.NodesViewHolder>(){
         val note = dataset[position]
         holder.itemView.name_note.text = note.name
         holder.itemView.text_note.text = note.text
-        holder.itemView.pin_button.setOnClickListener(listener)
+        holder.itemView.pin_button.text = if(!note.isPinned) "Pin" else "Unpin"
+        holder.itemView.pin_button.setOnClickListener {
+            this.position = position
+            listener?.onClick(it)
+        }
         holder.itemView.setOnClickListener {
             this.position = position
             listener?.onClick(it)
@@ -36,6 +40,7 @@ class NodesAdapter :RecyclerView.Adapter<NodesAdapter.NodesViewHolder>(){
 
     fun setNotes(notes: List<Note>) {
         this.dataset = notes
+        dataset = dataset.sortedByDescending { it.isPinned }
         notifyDataSetChanged()
     }
 

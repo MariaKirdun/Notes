@@ -53,7 +53,7 @@ class ListNotesFragment : Fragment() {
         adapter.listener = View.OnClickListener {
             when(it.id) {
                 R.id.pin_button ->
-                    Toast.makeText(this.context, "pin", Toast.LENGTH_SHORT).show()
+                    pinItem(adapter.getItem(adapter.position))
                 else ->
                     openDetails(adapter.getItem(adapter.position))
             }
@@ -100,6 +100,21 @@ class ListNotesFragment : Fragment() {
                 .replace(R.id.container, DetailsFragment(note))
                 .addToBackStack(null)
                 .commit()
+        }
+    }
+
+    private fun pinItem(note: Note?){
+        note?.let {
+            viewModel.update(
+                Note(
+                    it.uid,
+                    it.name,
+                    it.text,
+                    it.date,
+                    it.color,
+                    !it.isPinned
+                )
+            )
         }
     }
 
