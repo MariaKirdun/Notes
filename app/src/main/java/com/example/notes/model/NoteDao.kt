@@ -1,10 +1,7 @@
 package com.example.notes.model
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface NoteDao {
@@ -17,4 +14,7 @@ interface NoteDao {
 
     @Delete
     fun delete(note: Note)
+
+    @Update
+    fun update(note: Note)
 }

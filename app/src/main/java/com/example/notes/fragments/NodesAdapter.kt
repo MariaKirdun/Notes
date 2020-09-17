@@ -13,6 +13,7 @@ class NodesAdapter :RecyclerView.Adapter<NodesAdapter.NodesViewHolder>(){
 
     private var dataset: List<Note> = listOf()
     var listener : View.OnClickListener? = null
+    var position : Int = 0
 
     class NodesViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
@@ -27,6 +28,10 @@ class NodesAdapter :RecyclerView.Adapter<NodesAdapter.NodesViewHolder>(){
         holder.itemView.name_note.text = note.name
         holder.itemView.text_note.text = note.text
         holder.itemView.pin_button.setOnClickListener(listener)
+        holder.itemView.setOnClickListener {
+            this.position = position
+            listener?.onClick(it)
+        }
     }
 
     fun setNotes(notes: List<Note>) {

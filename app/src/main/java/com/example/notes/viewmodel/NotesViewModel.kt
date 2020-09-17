@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.coroutines.coroutineContext
 
-class ListNotesViewModel (application: Application) : AndroidViewModel(application) {
+class NotesViewModel (application: Application) : AndroidViewModel(application) {
 
     private val repository: Repository
 
@@ -38,6 +38,12 @@ class ListNotesViewModel (application: Application) : AndroidViewModel(applicati
     fun delete(note: Note){
         viewModelScope.launch(Dispatchers.IO) {
             repository.delete(note)
+        }
+    }
+
+    fun update(note: Note){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.update(note)
         }
     }
 

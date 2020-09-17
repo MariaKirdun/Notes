@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.notes.viewmodel.ListNotesViewModel"
+            type="com.example.notes.viewmodel.NotesViewModel"
             />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,11 +27,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/notes_list"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/search_edit_text"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/note_item_layout" >
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_edit_text"
+            tools:listitem="@layout/note_item_layout">
 
         </androidx.recyclerview.widget.RecyclerView>
 

@@ -13,14 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.R
 import com.example.notes.model.Note
-import com.example.notes.viewmodel.ListNotesViewModel
+import com.example.notes.viewmodel.NotesViewModel
+import kotlinx.android.synthetic.main.note_item_layout.view.*
 import kotlinx.android.synthetic.main.notes_fragment.*
 import java.util.*
 
 
 class ListNotesFragment : Fragment() {
 
-    private lateinit var viewModel: ListNotesViewModel
+    private lateinit var viewModel: NotesViewModel
     private val adapter = NodesAdapter()
 
     private var notesList: List<Note> = listOf()
@@ -36,7 +37,7 @@ class ListNotesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         viewModel = ViewModelProvider.AndroidViewModelFactory(this.activity!!.application).create(
-            ListNotesViewModel::class.java
+            NotesViewModel::class.java
         )
 
 
@@ -50,13 +51,17 @@ class ListNotesFragment : Fragment() {
         notes_list.adapter = adapter
         notes_list.layoutManager = LinearLayoutManager(this.context)
         adapter.listener = View.OnClickListener {
-            Toast.makeText(this.context, "pin", Toast.LENGTH_SHORT).show()
+            when(it.id) {
+                R.id.pin_button ->
+                    Toast.makeText(this.context, "pin", Toast.LENGTH_SHORT).show()
+                else ->
+                    openDetails(adapter.getItem(adapter.position))
+            }
         }
         ItemTouchHelper(simpleItemTouchCallback).attachToRecyclerView(notes_list)
 
         add_note_button.setOnClickListener {
-            Toast.makeText(this.context, "createNote", Toast.LENGTH_SHORT).show()
-            viewModel.insert(Note(name = "gyte", text = "viuoiu", color = "red", date = Date()))
+            openDetails(null)
         }
 
         search_edit_text.doOnTextChanged { text, start, count, after ->
@@ -86,6 +91,15 @@ class ListNotesFragment : Fragment() {
             //Remove swiped item from list and notify the RecyclerView
             val position = viewHolder.adapterPosition
             viewModel.delete(adapter.getItem(position))
+        }
+    }
+
+    private fun openDetails(note: Note?){
+        activity?.let {
+            it.supportFragmentManager.beginTransaction()
+                .replace(R.id.container, DetailsFragment(note))
+                .addToBackStack(null)
+                .commit()
         }
     }
 

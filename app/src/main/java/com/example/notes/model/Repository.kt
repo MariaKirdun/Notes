@@ -14,4 +14,8 @@ class Repository (private val nodeDao: NoteDao) {
         nodeDao.delete(note)
     }
 
+    suspend fun update(note: Note) {
+        nodeDao.update(note)
+    }
+
 }
